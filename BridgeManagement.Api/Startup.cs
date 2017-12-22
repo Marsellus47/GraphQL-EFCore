@@ -42,6 +42,7 @@ namespace BridgeManagement.Api
 			services.AddTransient<LogLevelEnum>();
 			services.AddTransient<ProjectionType>();
 			services.AddTransient<SortType>();
+			services.AddTransient<SortingDirectionEnum>();
 			services.AddTransient<ConditionType>();
 			services.AddTransient<LogicalOperatorEnum>();
 			services.AddTransient<ComparisonOperatorEnum>();

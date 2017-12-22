@@ -10,7 +10,7 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 			Description = "Sort expression.";
 
 			Field<StringGraphType>(nameof(Sort.Column), "Column name.");
-			Field<BooleanGraphType>(nameof(Sort.Ascending), "Ascending order.");
+			Field<SortingDirectionEnum>(nameof(Sort.SortingDirection), "Sorting direction.");
 		}
     }
 }
