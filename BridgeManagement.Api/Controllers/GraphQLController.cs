@@ -39,7 +39,9 @@ namespace BridgeManagement.Api.Controllers
 			var executionOptions = new ExecutionOptions
 			{
 				Schema = _schema,
-				Query = query.Query
+				Query = query.Query,
+				Inputs = query.Variables.ToInputs(),
+				OperationName = query.OperationName
 			};
 
 			try

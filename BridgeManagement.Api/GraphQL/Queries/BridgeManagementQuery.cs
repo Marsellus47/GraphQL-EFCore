@@ -82,10 +82,10 @@ namespace BridgeManagement.Api.GraphQL.Queries
 			    resolve: context =>
 			    {
 				    var id = context.GetArgument<short>("id");
-				    var dataSourceRequest = context.GetArgument<Projection>(nameof(Projection));
+				    var projection = context.GetArgument<Projection>(nameof(Projection));
 					var sessions = sessionInfoRepository
 						.GetInterfaceSessions(id)
-						.ProjectData(dataSourceRequest);
+						.ProjectData(projection);
 
 				    return sessions.ToList();
 			    });

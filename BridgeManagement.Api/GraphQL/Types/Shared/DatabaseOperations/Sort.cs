@@ -27,7 +27,7 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 						: orderedQueryable.OrderByDescending(entity => EF.Property<object>(entity, sort.Column));
 				}
 			}
-			queryable = orderedQueryable;
+			queryable = orderedQueryable ?? queryable;
 		}
 	}
 }
