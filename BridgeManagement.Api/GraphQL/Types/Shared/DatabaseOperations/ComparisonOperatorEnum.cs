@@ -15,8 +15,6 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 		    AddValue(nameof(ComparisonOperator.NotEqual), "Left operand does not have to be equal to right operand.", ComparisonOperator.NotEqual);
 			AddValue(nameof(ComparisonOperator.GreaterOrEqual), "Left operand has to be greater than or equal to right operand.", ComparisonOperator.GreaterOrEqual);
 			AddValue(nameof(ComparisonOperator.Greater), "Left operand has to be greater than right operand.", ComparisonOperator.Greater);
-		    AddValue(nameof(ComparisonOperator.Contains), "Left operand has to contain right operand.", ComparisonOperator.Contains, "Does not work");
-		    AddValue(nameof(ComparisonOperator.NotContains), "Left operand does not have to contain right operand.", ComparisonOperator.NotContains, "Does not work");
 		    AddValue(nameof(ComparisonOperator.StartsWith), "Left operand has to start with right operand.", ComparisonOperator.StartsWith);
 		    AddValue(nameof(ComparisonOperator.EndsWith), "Left operand has to end with right operand.", ComparisonOperator.EndsWith);
 		}

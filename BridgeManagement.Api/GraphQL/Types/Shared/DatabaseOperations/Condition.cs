@@ -19,7 +19,6 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 
 			queryable = queryable.Where(WhereCondition.Item1, WhereCondition.Item2);
 			_argumentNumber = 0;
-			//queryable = queryable.Where(x => new int?[] { 1, 2 }.Contains((x as DataAccessLayer.Models.SessionInfo).MessageCount));
 		}
 
 		private static int _argumentNumber;
@@ -59,12 +58,6 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 							break;
 						case ComparisonOperator.Greater:
 							conditions.Add($" ({Column} > @{_argumentNumber}) ");
-							break;
-						case ComparisonOperator.Contains:
-							conditions.Add(" (1 = 1) ");
-							break;
-						case ComparisonOperator.NotContains:
-							conditions.Add(" (1 = 1) ");
 							break;
 						case ComparisonOperator.StartsWith:
 							conditions.Add($" ({Column}.StartsWith(@{_argumentNumber})) ");

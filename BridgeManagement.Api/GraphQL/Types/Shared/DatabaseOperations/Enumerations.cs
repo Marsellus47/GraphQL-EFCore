@@ -20,8 +20,6 @@
 		NotEqual,
 		GreaterOrEqual,
 		Greater,
-		Contains,
-		NotContains,
 		StartsWith,
 		EndsWith
 	}
