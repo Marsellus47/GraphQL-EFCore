@@ -9,8 +9,8 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 			Name = nameof(Sort);
 			Description = "Sort expression.";
 
-			Field<StringGraphType>(nameof(Sort.Column), "Column name.");
-			Field<SortingDirectionEnum>(nameof(Sort.SortingDirection), "Sorting direction.");
+			Field<NonNullGraphType<StringGraphType>>(nameof(Sort.Column), "Column name.");
+			Field<NonNullGraphType<SortingDirectionEnum>>(nameof(Sort.SortingDirection), "Sorting direction.");
 		}
     }
 }

@@ -15,19 +15,19 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 
 		public void FilterQuery<T>(ref IQueryable<T> queryable)
 		{
+			if (string.IsNullOrEmpty(Column) && !Conditions.Any()) return;
+
 			queryable = queryable.Where(WhereCondition.Item1, WhereCondition.Item2);
+			_argumentNumber = 0;
 			//queryable = queryable.Where(x => new int?[] { 1, 2 }.Contains((x as DataAccessLayer.Models.SessionInfo).MessageCount));
 		}
+
+		private static int _argumentNumber;
 
 		private Tuple<string, object[]> WhereCondition
 		{
 			get
 			{
-				if (string.IsNullOrEmpty(Column) || Value == null)
-				{
-					return new Tuple<string, object[]>(string.Empty, null);
-				}
-
 				var conditions = new List<string>();
 				var arguments = new List<object>();
 
@@ -35,46 +35,51 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 				{
 					var innerWhereCondition = innerCondition.WhereCondition;
 					conditions.Add(innerWhereCondition.Item1);
-					arguments.Add(innerWhereCondition.Item2);
+					arguments.AddRange(innerWhereCondition.Item2);
 				}
 
-				switch (ComparisonOperator)
+				if (!string.IsNullOrEmpty(Column))
 				{
-					case ComparisonOperator.Lower:
-						conditions.Add($" ({Column} < @0) ");
-						break;
-					case ComparisonOperator.LowerOrEqual:
-						conditions.Add($" ({Column} <= @0) ");
-						break;
-					case ComparisonOperator.Equal:
-						conditions.Add($" ({Column} == @0) ");
-						break;
-					case ComparisonOperator.NotEqual:
-						conditions.Add($" ({Column} != @0) ");
-						break;
-					case ComparisonOperator.GreaterOrEqual:
-						conditions.Add($" ({Column} >= @0) ");
-						break;
-					case ComparisonOperator.Greater:
-						conditions.Add($" ({Column} > @0) ");
-						break;
-					case ComparisonOperator.Contains:
-						conditions.Add(" (1 = 1) ");
-						break;
-					case ComparisonOperator.NotContains:
-						conditions.Add(" (1 = 1) ");
-						break;
-					case ComparisonOperator.StartsWith:
-						conditions.Add($" ({Column}.StartsWith(@0)) ");
-						break;
-					case ComparisonOperator.EndsWith:
-						conditions.Add($" ({Column}.EndsWith(@0)) ");
-						break;
-					default:
-						throw new ArgumentOutOfRangeException();
+					switch (ComparisonOperator)
+					{
+						case ComparisonOperator.Lower:
+							conditions.Add($" ({Column} < @{_argumentNumber}) ");
+							break;
+						case ComparisonOperator.LowerOrEqual:
+							conditions.Add($" ({Column} <= @{_argumentNumber}) ");
+							break;
+						case ComparisonOperator.Equal:
+							conditions.Add($" ({Column} == @{_argumentNumber}) ");
+							break;
+						case ComparisonOperator.NotEqual:
+							conditions.Add($" ({Column} != @{_argumentNumber}) ");
+							break;
+						case ComparisonOperator.GreaterOrEqual:
+							conditions.Add($" ({Column} >= @{_argumentNumber}) ");
+							break;
+						case ComparisonOperator.Greater:
+							conditions.Add($" ({Column} > @{_argumentNumber}) ");
+							break;
+						case ComparisonOperator.Contains:
+							conditions.Add(" (1 = 1) ");
+							break;
+						case ComparisonOperator.NotContains:
+							conditions.Add(" (1 = 1) ");
+							break;
+						case ComparisonOperator.StartsWith:
+							conditions.Add($" ({Column}.StartsWith(@{_argumentNumber})) ");
+							break;
+						case ComparisonOperator.EndsWith:
+							conditions.Add($" ({Column}.EndsWith(@{_argumentNumber})) ");
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
+					}
+
+					arguments.Add(Value);
+					_argumentNumber++;
 				}
 
-				arguments.Add(Value);
 				var condition = string.Join(ConditionsLogicalOperator == LogicalOperator.And ? " && " : " || ", conditions);
 
 				return new Tuple<string, object[]>($" ({condition}) ", arguments.ToArray());
