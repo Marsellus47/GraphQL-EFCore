@@ -1,4 +1,4 @@
-﻿using BridgeManagement.Api.GraphQL.Queries;
+﻿using BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries;
 using BridgeManagement.Api.GraphQL.Schemas;
 using BridgeManagement.Api.GraphQL.Types.InterfaceInfo;
 using BridgeManagement.Api.GraphQL.Types.SessionInfo;
@@ -18,22 +18,22 @@ using Microsoft.Extensions.DependencyInjection;
 namespace BridgeManagement.Api
 {
 	public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+	{
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
 
-        public IConfiguration Configuration { get; }
+		public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc();
 
 			services.AddScoped<BridgeManagementQuery>();
 			services.AddTransient<IInterfaceInfoRepository, InterfaceInfoRepository>();
-	        services.AddTransient<ISessionInfoRepository, SessionInfoRepository>();
+			services.AddTransient<ISessionInfoRepository, SessionInfoRepository>();
 
 			services.AddDbContext<BmtContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -56,18 +56,18 @@ namespace BridgeManagement.Api
 			{
 				Query = sp.GetService<BridgeManagementQuery>()
 			});
-        }
+		}
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
 
 			app.UseStaticFiles();
-            app.UseMvc();
-        }
-    }
+			app.UseMvc();
+		}
+	}
 }

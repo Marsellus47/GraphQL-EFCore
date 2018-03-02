@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BridgeManagement.Api.GraphQL.Queries;
+using BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace BridgeManagement.Api.Controllers
 {
 	[Produces("application/json")]
-    [Route("graphql")]
-    public class GraphQLController : Controller
+	[Route("graphql")]
+	public class GraphQLController : Controller
 	{
 		private readonly IDocumentExecuter _documentExecuter;
 		private readonly ISchema _schema;
@@ -29,7 +29,7 @@ namespace BridgeManagement.Api.Controllers
 		}
 
 		[HttpPost]
-	    public async Task<IActionResult> PostAsync([FromBody] GraphQLQuery query)
+		public async Task<IActionResult> PostAsync([FromBody] GraphQLQuery query)
 		{
 			if (query == null)
 			{
@@ -59,6 +59,6 @@ namespace BridgeManagement.Api.Controllers
 			{
 				return BadRequest(ex);
 			}
-	    }
-    }
+		}
+	}
 }

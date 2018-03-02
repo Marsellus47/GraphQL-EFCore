@@ -1,10 +1,10 @@
-﻿namespace BridgeManagement.Api.GraphQL.Queries
+﻿namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 {
 	public class GraphQLQuery
-    {
+	{
 		public string OperationName { get; set; }
 		public string NamedQuery { get; set; }
 		public string Query { get; set; }
 		public string Variables { get; set; }
-    }
+	}
 }

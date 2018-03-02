@@ -12,5 +12,5 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 			Field<NonNullGraphType<StringGraphType>>(nameof(Sort.Column), "Column name.");
 			Field<NonNullGraphType<SortingDirectionEnum>>(nameof(Sort.SortingDirection), "Sorting direction.");
 		}
-    }
+	}
 }

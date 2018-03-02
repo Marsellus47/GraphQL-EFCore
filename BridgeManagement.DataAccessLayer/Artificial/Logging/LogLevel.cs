@@ -1,7 +1,7 @@
 ﻿namespace BridgeManagement.DataAccessLayer.Artificial.Logging
 {
 	public enum LogLevel
-    {
+	{
 		SysInfo = -1,
 		Fatal = 0,
 		Alert = 1,
@@ -12,5 +12,5 @@
 		Info = 6,
 		Debug = 7,
 		Trace = 8
-    }
+	}
 }

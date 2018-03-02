@@ -3,9 +3,9 @@
 namespace BridgeManagement.DataAccessLayer.Repositories.SessionInfo
 {
 	public interface ISessionInfoRepository : IBaseRepository<Models.SessionInfo>
-    {
-	    Models.SessionInfo Get(int id);
+	{
+		Models.SessionInfo Get(int id);
 
-	    IQueryable<Models.SessionInfo> GetInterfaceSessions(short id);
-    }
+		IQueryable<Models.SessionInfo> GetInterfaceSessions(short id);
+	}
 }
