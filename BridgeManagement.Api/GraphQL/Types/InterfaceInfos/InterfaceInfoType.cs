@@ -1,15 +1,16 @@
 ﻿using System.Linq;
-using BridgeManagement.Api.GraphQL.Types.SessionInfo;
-using BridgeManagement.DataAccessLayer.Repositories.SessionInfo;
+using BridgeManagement.Api.GraphQL.Types.SessionInfos;
+using BridgeManagement.DataAccessLayer.Models;
+using BridgeManagement.DataAccessLayer.Repositories.SessionInfos;
 using GraphQL.Types;
 
-namespace BridgeManagement.Api.GraphQL.Types.InterfaceInfo
+namespace BridgeManagement.Api.GraphQL.Types.InterfaceInfos
 {
-	public class InterfaceInfoType : ObjectGraphType<DataAccessLayer.Models.InterfaceInfo>
+	public class InterfaceInfoType : ObjectGraphType<InterfaceInfo>
 	{
 		public InterfaceInfoType(ISessionInfoRepository sessionInfoRepository)
 		{
-			Name = nameof(DataAccessLayer.Models.InterfaceInfo);
+			Name = nameof(InterfaceInfo);
 			Description = "Information about interface.";
 
 			Field(x => x.ID, type: typeof(IntGraphType)).Description("The ID of the Interface.");

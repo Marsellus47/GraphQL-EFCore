@@ -2,8 +2,8 @@
 
 using GraphQL.Types;
 
-using BridgeManagement.Api.GraphQL.Types.InterfaceInfo;
-using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfo;
+using BridgeManagement.Api.GraphQL.Types.InterfaceInfos;
+using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfos;
 
 namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 {

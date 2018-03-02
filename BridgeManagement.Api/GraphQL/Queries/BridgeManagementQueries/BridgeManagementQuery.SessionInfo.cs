@@ -2,9 +2,9 @@
 
 using GraphQL.Types;
 
-using BridgeManagement.DataAccessLayer.Repositories.SessionInfo;
+using BridgeManagement.DataAccessLayer.Repositories.SessionInfos;
 using BridgeManagement.Api.Extensions;
-using BridgeManagement.Api.GraphQL.Types.SessionInfo;
+using BridgeManagement.Api.GraphQL.Types.SessionInfos;
 using BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations;
 
 namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
@@ -14,25 +14,25 @@ namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 		private void InitializeSessionInfoQuery(ISessionInfoRepository sessionInfoRepository)
 		{
 			Field<SessionInfoType>(
-				"session",
+				"Session",
 				arguments: new QueryArguments(
 					new QueryArgument<NonNullGraphType<IntGraphType>>
 					{
-						Name = "id",
+						Name = "ID",
 						Description = "id of the session"
 					}),
 				resolve: context =>
 				{
-					var id = context.GetArgument<int>("id");
+					var id = context.GetArgument<int>("Id");
 					return sessionInfoRepository.Get(id);
 				});
 
 			Field<ListGraphType<SessionInfoType>>(
-				"sessions",
+				"Sessions",
 				arguments: new QueryArguments(
 					new QueryArgument<NonNullGraphType<IntGraphType>>
 					{
-						Name = "interfaceId",
+						Name = "InterfaceID",
 						Description = "id of the interface."
 					},
 					new QueryArgument<ProjectionType>
@@ -42,7 +42,7 @@ namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 					}),
 				resolve: context =>
 				{
-					var id = context.GetArgument<short>("interfaceId");
+					var id = context.GetArgument<short>("InterfaceID");
 					var projection = context.GetArgument<Projection>(nameof(Projection));
 					var sessions = sessionInfoRepository
 						.GetInterfaceSessions(id)

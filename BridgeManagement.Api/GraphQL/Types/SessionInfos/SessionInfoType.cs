@@ -1,15 +1,22 @@
-﻿using BridgeManagement.Api.GraphQL.Types.InterfaceInfo;
+﻿using BridgeManagement.Api.Extensions;
+using BridgeManagement.Api.GraphQL.Types.ImportLogs;
+using BridgeManagement.Api.GraphQL.Types.InterfaceInfos;
 using BridgeManagement.Api.GraphQL.Types.Shared;
-using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfo;
+using BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations;
+using BridgeManagement.DataAccessLayer.Models;
+using BridgeManagement.DataAccessLayer.Repositories.ImportLogs;
+using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfos;
 using GraphQL.Types;
 
-namespace BridgeManagement.Api.GraphQL.Types.SessionInfo
+namespace BridgeManagement.Api.GraphQL.Types.SessionInfos
 {
-	public class SessionInfoType : ObjectGraphType<DataAccessLayer.Models.SessionInfo>
+	public class SessionInfoType : ObjectGraphType<SessionInfo>
 	{
-		public SessionInfoType(IInterfaceInfoRepository interfaceInfoRepository)
+		public SessionInfoType(
+			IInterfaceInfoRepository interfaceInfoRepository,
+			IImportLogRepository importLogRepository)
 		{
-			Name = nameof(DataAccessLayer.Models.SessionInfo);
+			Name = nameof(SessionInfo);
 
 			Field(x => x.SessionID).Description("The id of the Session.");
 			Field(x => x.UserID, true, typeof(IntGraphType)).Description("The id of the user which started the Session.");
@@ -32,6 +39,21 @@ namespace BridgeManagement.Api.GraphQL.Types.SessionInfo
 
 			Field<InterfaceInfoType>(nameof(InterfaceInfo),
 				resolve: context => interfaceInfoRepository.Get(context.Source.InterfaceInfoID));
+
+			Field<ListGraphType<ImportLogType>>(
+				"ImportLogs",
+				arguments: new QueryArguments(
+					new QueryArgument<ProjectionType>
+					{
+						Name = nameof(Projection),
+						Description = "Data projection."
+					}),
+				resolve: context =>
+				{
+					var projection = context.GetArgument<Projection>(nameof(Projection));
+					var logs = importLogRepository.GetAll(context.Source.SessionID).ProjectData(projection);
+					return logs;
+				});
 		}
 	}
 }

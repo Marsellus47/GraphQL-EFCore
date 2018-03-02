@@ -1,4 +1,4 @@
-﻿using BridgeManagement.DataAccessLayer.Artificial.ImportLog;
+﻿using BridgeManagement.DataAccessLayer.Artificial.ImportLogs;
 using BridgeManagement.DataAccessLayer.Artificial.Logging;
 
 namespace BridgeManagement.DataAccessLayer.Models

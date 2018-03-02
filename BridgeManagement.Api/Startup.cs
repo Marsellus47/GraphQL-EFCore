@@ -1,12 +1,19 @@
 ﻿using BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries;
 using BridgeManagement.Api.GraphQL.Schemas;
-using BridgeManagement.Api.GraphQL.Types.InterfaceInfo;
-using BridgeManagement.Api.GraphQL.Types.SessionInfo;
+using BridgeManagement.Api.GraphQL.Types.ImportLogs;
+using BridgeManagement.Api.GraphQL.Types.InterfaceInfos;
+using BridgeManagement.Api.GraphQL.Types.RecordInfos;
+using BridgeManagement.Api.GraphQL.Types.RecordStatusLogs;
+using BridgeManagement.Api.GraphQL.Types.SessionInfos;
 using BridgeManagement.Api.GraphQL.Types.Shared;
 using BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations;
+using BridgeManagement.Api.GraphQL.Types.StatusDefinitions;
 using BridgeManagement.DataAccessLayer;
-using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfo;
-using BridgeManagement.DataAccessLayer.Repositories.SessionInfo;
+using BridgeManagement.DataAccessLayer.Repositories.ImportLogs;
+using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfos;
+using BridgeManagement.DataAccessLayer.Repositories.RecordInfos;
+using BridgeManagement.DataAccessLayer.Repositories.RecordStatusLogs;
+using BridgeManagement.DataAccessLayer.Repositories.SessionInfos;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -32,24 +39,33 @@ namespace BridgeManagement.Api
 			services.AddMvc();
 
 			services.AddScoped<BridgeManagementQuery>();
+			services.AddTransient<IImportLogRepository, ImportLogRepository>();
 			services.AddTransient<IInterfaceInfoRepository, InterfaceInfoRepository>();
+			services.AddTransient<IRecordInfoRepository, RecordInfoRepository>();
+			services.AddTransient<IRecordStatusLogRepository, RecordStatusLogRepository>();
 			services.AddTransient<ISessionInfoRepository, SessionInfoRepository>();
 
 			services.AddDbContext<BmtContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 			services.AddScoped<IDocumentExecuter, DocumentExecuter>();
-			services.AddTransient<LogLevelEnum>();
-			services.AddTransient<ProjectionType>();
-			services.AddTransient<SortType>();
-			services.AddTransient<SortingDirectionEnum>();
-			services.AddTransient<ConditionType>();
-			services.AddTransient<LogicalOperatorEnum>();
 			services.AddTransient<ComparisonOperatorEnum>();
-			services.AddTransient<InterfaceInfoType>();
+			services.AddTransient<ConditionType>();
+			services.AddTransient<ImportLogType>();
 			services.AddTransient<InterfaceDirectionEnum>();
+			services.AddTransient<InterfaceInfoType>();
+			services.AddTransient<LogicalOperatorEnum>();
+			services.AddTransient<LogLevelEnum>();
+			services.AddTransient<ProcessingPhaseEnum>();
+			services.AddTransient<ProjectionType>();
+			services.AddTransient<RecordInfoType>();
+			services.AddTransient<RecordStatusLogType>();
 			services.AddTransient<SessionInfoType>();
 			services.AddTransient<SessionResultEnum>();
+			services.AddTransient<SortingDirectionEnum>();
+			services.AddTransient<SortType>();
+			services.AddTransient<StatusDefinitionType>();
+			services.AddTransient<StatusResultEnum>();
 
 			var sp = services.BuildServiceProvider();
 			services.AddScoped<ISchema>(_ => new BridgeManagementSchema(type => (GraphType) sp.GetService(type))

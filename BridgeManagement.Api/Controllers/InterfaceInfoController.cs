@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfo;
+using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

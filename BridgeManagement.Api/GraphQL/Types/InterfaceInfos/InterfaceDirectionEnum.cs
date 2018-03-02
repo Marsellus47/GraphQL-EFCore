@@ -1,7 +1,7 @@
-﻿using BridgeManagement.DataAccessLayer.Artificial.InterfaceInfo;
+﻿using BridgeManagement.DataAccessLayer.Artificial.InterfaceInfos;
 using GraphQL.Types;
 
-namespace BridgeManagement.Api.GraphQL.Types.InterfaceInfo
+namespace BridgeManagement.Api.GraphQL.Types.InterfaceInfos
 {
 	public class InterfaceDirectionEnum : EnumerationGraphType
 	{

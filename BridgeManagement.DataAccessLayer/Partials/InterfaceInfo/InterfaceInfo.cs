@@ -1,5 +1,5 @@
 ﻿using System;
-using BridgeManagement.DataAccessLayer.Artificial.InterfaceInfo;
+using BridgeManagement.DataAccessLayer.Artificial.InterfaceInfos;
 
 namespace BridgeManagement.DataAccessLayer.Models
 {

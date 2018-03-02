@@ -1,4 +1,4 @@
-﻿namespace BridgeManagement.DataAccessLayer.Artificial.SessionInfo
+﻿namespace BridgeManagement.DataAccessLayer.Artificial.SessionInfos
 {
 	public enum SessionResult
 	{

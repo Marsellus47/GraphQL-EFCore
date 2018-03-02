@@ -11,6 +11,11 @@ namespace BridgeManagement.DataAccessLayer
 		public virtual DbSet<ObjectMetadataDefinition> ObjectMetadataDef { get; set; }
 		public virtual DbSet<SessionInfo> SessionInfo { get; set; }
 
+		public virtual DbSet<T> GetDbSet<T>() where T : class
+		{
+			return Set<T>();
+		}
+
 		public BmtContext(DbContextOptions<BmtContext> options)
 			: base(options) { }
 
@@ -96,6 +101,31 @@ namespace BridgeManagement.DataAccessLayer
 				entity.Property(e => e.SI_VerboseLevel).HasDefaultValueSql("((5))");
 
 				entity.Property(e => e.StorageFileName).IsUnicode(false);
+			});
+
+			modelBuilder.Entity<ProcessedObject>(entity =>
+			{
+				entity.HasKey(e => new { SiSessionId = e.SessionID, RiRecordId = e.RecordID, PoObjectId = e.ObjectID });
+
+				entity.Property(e => e.RecordID).IsUnicode(false);
+
+				entity.Property(e => e.ObjectID).IsUnicode(false);
+			});
+
+			modelBuilder.Entity<RecordInfo>(entity =>
+			{
+				entity.HasKey(e => new { RiRecordId = e.RecordID, SiSessionId = e.SessionID });
+
+				entity.Property(e => e.RecordID).IsUnicode(false);
+
+				entity.Property(e => e.StorageFileName).IsUnicode(false);
+			});
+
+			modelBuilder.Entity<RecordStatusLog>(entity =>
+			{
+				entity.HasKey(e => new { RiRecordId = e.RecordID, SiSessionId = e.SessionID, RslId = e.RecordStatusLogID });
+
+				entity.Property(e => e.RecordID).IsUnicode(false);
 			});
 		}
 	}

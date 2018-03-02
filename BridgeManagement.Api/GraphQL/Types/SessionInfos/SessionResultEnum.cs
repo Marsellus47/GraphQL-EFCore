@@ -1,7 +1,7 @@
-﻿using BridgeManagement.DataAccessLayer.Artificial.SessionInfo;
+﻿using BridgeManagement.DataAccessLayer.Artificial.SessionInfos;
 using GraphQL.Types;
 
-namespace BridgeManagement.Api.GraphQL.Types.SessionInfo
+namespace BridgeManagement.Api.GraphQL.Types.SessionInfos
 {
 	public class SessionResultEnum : EnumerationGraphType
 	{

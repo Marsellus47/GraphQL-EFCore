@@ -2,8 +2,9 @@
 
 using GraphQL.Types;
 
-using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfo;
-using BridgeManagement.DataAccessLayer.Repositories.SessionInfo;
+using BridgeManagement.DataAccessLayer.Repositories.InterfaceInfos;
+using BridgeManagement.DataAccessLayer.Repositories.RecordInfos;
+using BridgeManagement.DataAccessLayer.Repositories.SessionInfos;
 
 namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 {
@@ -11,7 +12,8 @@ namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 	{
 		public BridgeManagementQuery(
 			IInterfaceInfoRepository interfaceInfoRepository,
-			ISessionInfoRepository sessionInfoRepository)
+			ISessionInfoRepository sessionInfoRepository,
+			IRecordInfoRepository recordInfoRepository)
 		{
 			if (interfaceInfoRepository == null)
 			{
@@ -24,6 +26,7 @@ namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 
 			InitializeInterfaceInfoQuery(interfaceInfoRepository);
 			InitializeSessionInfoQuery(sessionInfoRepository);
+			InitializeRecordInfoQuery(recordInfoRepository);
 		}
 	}
 }

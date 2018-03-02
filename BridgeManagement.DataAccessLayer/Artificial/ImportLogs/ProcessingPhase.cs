@@ -1,4 +1,4 @@
-﻿namespace BridgeManagement.DataAccessLayer.Artificial.ImportLog
+﻿namespace BridgeManagement.DataAccessLayer.Artificial.ImportLogs
 {
 	public enum ProcessingPhase
 	{

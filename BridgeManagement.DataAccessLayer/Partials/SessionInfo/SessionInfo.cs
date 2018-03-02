@@ -1,5 +1,5 @@
 ﻿using BridgeManagement.DataAccessLayer.Artificial.Logging;
-using BridgeManagement.DataAccessLayer.Artificial.SessionInfo;
+using BridgeManagement.DataAccessLayer.Artificial.SessionInfos;
 
 namespace BridgeManagement.DataAccessLayer.Models
 {
