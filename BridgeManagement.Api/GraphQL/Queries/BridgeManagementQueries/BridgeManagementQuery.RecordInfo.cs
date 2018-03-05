@@ -3,6 +3,7 @@ using BridgeManagement.Api.GraphQL.Types.RecordInfos;
 using BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations;
 using BridgeManagement.DataAccessLayer.Repositories.RecordInfos;
 using GraphQL.Types;
+using System.Collections.Generic;
 
 namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 {
@@ -47,7 +48,26 @@ namespace BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries
 				{
 					var interfaceId = context.GetArgument<short>("InterfaceID");
 					var projection = context.GetArgument<Projection>(nameof(Projection));
-					return recordInfoRepository.GetAllByInterface(interfaceId).ProjectData(projection);
+
+					var selectionSet = context.Operation.SelectionSet;
+					var includes = new List<string>();
+
+					if (selectionSet.ContainsSelection("sessionInfo"))
+					{
+						includes.Add("SessionInfo");
+					}
+					if (selectionSet.ContainsSelection("recordStatusLogs"))
+					{
+						includes.Add("RecordStatusLogs");
+					}
+					if (selectionSet.ContainsSelection("statusDefinition"))
+					{
+						includes.Add("RecordStatusLogs.StatusDefinition");
+					}
+
+					return recordInfoRepository
+						.GetAllByInterface(interfaceId, includes.ToArray())
+						.ProjectData(projection);
 				});
 		}
 	}

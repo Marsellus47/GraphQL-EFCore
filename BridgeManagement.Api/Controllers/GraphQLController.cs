@@ -4,6 +4,7 @@ using BridgeManagement.Api.GraphQL.Queries.BridgeManagementQueries;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace BridgeManagement.Api.Controllers
 {
@@ -13,13 +14,16 @@ namespace BridgeManagement.Api.Controllers
 	{
 		private readonly IDocumentExecuter _documentExecuter;
 		private readonly ISchema _schema;
+		private readonly ILogger _logger;
 
 		public GraphQLController(
 			IDocumentExecuter documentExecuter,
-			ISchema schema)
+			ISchema schema,
+			ILogger<GraphQLController> logger)
 		{
 			_documentExecuter = documentExecuter ?? throw new ArgumentNullException(nameof(documentExecuter));
 			_schema = schema ?? throw new ArgumentNullException(nameof(schema));
+			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
 
 		[HttpGet]

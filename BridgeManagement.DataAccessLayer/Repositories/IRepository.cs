@@ -10,7 +10,7 @@ namespace BridgeManagement.DataAccessLayer.Repositories
 	{
 		IEnumerable<TEntity> GetAll();
 
-		IQueryable<TEntity> GetAllQueryable();
+		IQueryable<TEntity> GetAllQueryable(params string[] includes);
 
 		TEntity GetById(params object[] id);
 

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BridgeManagement.DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BridgeManagement.DataAccessLayer.Repositories.RecordInfos
 {
@@ -10,9 +11,9 @@ namespace BridgeManagement.DataAccessLayer.Repositories.RecordInfos
 		{
 		}
 
-		public IQueryable<RecordInfo> GetAllByInterface(short interfaceId)
+		public IQueryable<RecordInfo> GetAllByInterface(short interfaceId, params string[] includes)
 		{
-			var records = GetAllQueryable().Where(x => x.SessionInfo.InterfaceInfoID == interfaceId);
+			var records = GetAllQueryable(includes).Where(x => x.SessionInfo.InterfaceInfoID == interfaceId);
 			return records;
 		}
 

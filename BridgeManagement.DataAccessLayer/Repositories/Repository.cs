@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using BridgeManagement.DataAccessLayer.Models;
 
 namespace BridgeManagement.DataAccessLayer.Repositories
 {
@@ -27,9 +28,15 @@ namespace BridgeManagement.DataAccessLayer.Repositories
 
 		#region Public Methods
 
-		public IQueryable<TEntity> GetAllQueryable()
+		public IQueryable<TEntity> GetAllQueryable(params string[] includes)
 		{
-			return DbSet;
+			IQueryable<TEntity> result = DbSet;
+			foreach (var include in includes)
+			{
+				result = result.Include(include);
+			}
+			
+			return result;
 		}
 
 		public IEnumerable<TEntity> GetAll()

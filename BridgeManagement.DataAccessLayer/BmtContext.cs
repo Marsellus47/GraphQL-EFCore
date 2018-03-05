@@ -1,5 +1,7 @@
 using BridgeManagement.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 
 namespace BridgeManagement.DataAccessLayer
 {
@@ -9,7 +11,11 @@ namespace BridgeManagement.DataAccessLayer
 		public virtual DbSet<InterfaceInfo> InterfaceInfo { get; set; }
 		public virtual DbSet<ObjectMetadata> ObjectMetadata { get; set; }
 		public virtual DbSet<ObjectMetadataDefinition> ObjectMetadataDef { get; set; }
+		public virtual DbSet<ProcessedObject> ProcessedObject { get; set; }
+		public virtual DbSet<RecordInfo> RecordInfo { get; set; }
+		public virtual DbSet<RecordStatusLog> RecordStatusLog { get; set; }
 		public virtual DbSet<SessionInfo> SessionInfo { get; set; }
+		public virtual DbSet<StatusDefinition> StatusDefinition { get; set; }
 
 		public virtual DbSet<T> GetDbSet<T>() where T : class
 		{
@@ -18,6 +24,14 @@ namespace BridgeManagement.DataAccessLayer
 
 		public BmtContext(DbContextOptions<BmtContext> options)
 			: base(options) { }
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			var loggerFactory = new LoggerFactory();
+			loggerFactory.AddProvider(new DebugLoggerProvider());
+			optionsBuilder.UseLoggerFactory(loggerFactory);
+			optionsBuilder.EnableSensitiveDataLogging();
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

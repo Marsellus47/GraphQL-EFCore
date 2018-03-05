@@ -29,5 +29,32 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 			}
 			queryable = orderedQueryable ?? queryable;
 		}
+
+		public static void SortQuery<T>(ref IEnumerable<T> enumerable, IEnumerable<Sort> sorts)
+		{
+			IOrderedEnumerable<T> orderedEnumerable = null;
+			foreach (var sort in sorts.Reverse())
+			{
+				if (orderedEnumerable == null)
+				{
+					orderedEnumerable = sort.SortingDirection == SortingDirection.Ascending
+						? enumerable.OrderBy(entity => GetPropertyValue(entity, sort.Column))
+						: enumerable.OrderByDescending(entity => GetPropertyValue(entity, sort.Column));
+				}
+				else
+				{
+					orderedEnumerable = sort.SortingDirection == SortingDirection.Ascending
+						? orderedEnumerable.OrderBy(entity => GetPropertyValue(entity, sort.Column))
+						: orderedEnumerable.OrderByDescending(entity => GetPropertyValue(entity, sort.Column));
+				}
+			}
+			enumerable = orderedEnumerable ?? enumerable;
+		}
+
+		private static object GetPropertyValue<T>(T entity, string property)
+		{
+			var propertyInfo = entity.GetType().GetProperty(property);
+			return propertyInfo?.GetValue(entity);
+		}
 	}
 }

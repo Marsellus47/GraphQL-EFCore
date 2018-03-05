@@ -21,6 +21,14 @@ namespace BridgeManagement.Api.GraphQL.Types.Shared.DatabaseOperations
 			_argumentNumber = 0;
 		}
 
+		public void FilterQuery<T>(ref IEnumerable<T> enumerable)
+		{
+			if (string.IsNullOrEmpty(Column) && !Conditions.Any()) return;
+
+			enumerable = enumerable.AsQueryable().Where(WhereCondition.Item1, WhereCondition.Item2);
+			_argumentNumber = 0;
+		}
+
 		private static int _argumentNumber;
 
 		private Tuple<string, object[]> WhereCondition
